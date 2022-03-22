@@ -145,9 +145,14 @@ class Vkontakte extends OAuth2
         // Handle b-date.
         if ($data->get('bdate')) {
             $bday = explode('.', $data->get('bdate'));
-            $userProfile->birthDay = (int)$bday[0];
-            $userProfile->birthMonth = (int)$bday[1];
-            $userProfile->birthYear = (int)$bday[2];
+
+            // @property bdate
+            // Дата рождения. Возвращается в формате *DD.MM.YYYY* или *DD.MM* (если год рождения скрыт).
+            if (count($bday) === 3) {
+                $userProfile->birthDay = (int)$bday[0];
+                $userProfile->birthMonth = (int)$bday[1];
+                $userProfile->birthYear = (int)$bday[2];
+            }
         }
 
         $userProfile->data = [
